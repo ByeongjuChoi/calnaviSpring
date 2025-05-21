@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.example.demo.mapper.NoticeMapper">
+    <select id="getAllNotices" resultType="com.example.demo.model.Notice">
+        SELECT  id,
+            	title,
+            	content,
+	            author,
+	            created_at AS createdAt,
+	            updated_at AS updatedAt,
+	            is_pinned AS isPinned,
+	            is_deleted AS isDeleted,
+	            view_count AS viewCount
+          FROM notice
+         WHERE 1=1
+           AND is_deleted = false
+           AND id = #{id}
+         ORDER BY created_at DESC
+    </select>
+    
+    <select id="getMainNotices" resultType="com.example.demo.model.MainNotice">
+        SELECT  id,
+            	title,
+            	content,
+	            updated_at AS updatedAt
+          FROM notice
+         WHERE is_deleted = false
+         ORDER BY created_at DESC
+		<if test='MainOrAll == "M"'>
+		     LIMIT 5
+		</if>
+         
+    </select>
+    
+    <insert id="insertNotices" parameterType="com.example.demo.model.WriteNotice">
+    	INSERT INTO notice 
+    	(
+    		title,
+    		content,
+    		author
+    	) 
+    	VALUES
+    	(
+    		#{title},
+    		#{contents},
+    		#{userid}
+    	)
+    </insert>
+    
+    
+</mapper>
