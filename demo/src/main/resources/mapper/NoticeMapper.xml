@@ -59,5 +59,10 @@
     	</choose>
     </insert>
     
+    <delete id="deleteNotice" parameterType="com.example.demo.model.WriteNotice">
+    	DELETE FROM notice
+    	 WHERE id = #{id}
+    </delete>
+    
     
 </mapper>

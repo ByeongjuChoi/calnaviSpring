@@ -11,4 +11,5 @@ public interface NoticeMapper {
 	List<MainNotice> getMainNotices(String MainOrAll);	// 메인페이지 공지 조회
 	
 	void insertNotices(WriteNotice writeNotice);
+	void deleteNotice(WriteNotice writeNotice);
 }

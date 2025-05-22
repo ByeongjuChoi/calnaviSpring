@@ -35,4 +35,20 @@ public class AdminNoticesController {
 		adminNoticesService.insertNotices(writeNotice);
 		return ResponseEntity.ok("공지사항이 등록되었습니다.");
 	}
+	
+	@PostMapping("/delete")
+	public ResponseEntity<String> deleteNotice(@RequestBody WriteNotice writeNotice, 
+			@RequestHeader("Authorization") String authHeader,
+			@RequestHeader(value = "Role", required = false) String role) {
+		
+		if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증 토큰이 없습니다.");
+	    }
+		
+		if(!"ADMIN".equals(role)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("관리자 권한이 아닙니다.");
+		}
+		adminNoticesService.deleteNotice(writeNotice);
+		return ResponseEntity.ok("공지사항이 삭제되었습니다.");
+	}
 }

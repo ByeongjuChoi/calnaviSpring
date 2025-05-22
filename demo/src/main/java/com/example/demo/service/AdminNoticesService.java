@@ -15,4 +15,8 @@ public class AdminNoticesService {
 	public void insertNotices(WriteNotice writeNotice) {
 		noticeMapper.insertNotices(writeNotice);
 	}
+	
+	public void deleteNotice(WriteNotice writeNotice) {
+		noticeMapper.deleteNotice(writeNotice);
+	}
 }
