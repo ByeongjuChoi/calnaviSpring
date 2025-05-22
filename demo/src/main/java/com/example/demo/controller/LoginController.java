@@ -42,6 +42,7 @@ public class LoginController {
             Map<String, Object> responseData = new HashMap<>();
             responseData.put("token", token);
             responseData.put("username", dbUser.getUsername());
+            responseData.put("userid", user.getUserid());
             responseData.put("role", dbUser.getRole());
             responseData.put("issuedAt", claims.getIssuedAt().getTime());       // iat
             responseData.put("expiration", claims.getExpiration().getTime());   // exp

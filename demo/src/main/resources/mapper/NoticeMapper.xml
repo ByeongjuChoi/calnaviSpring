@@ -34,18 +34,29 @@
     </select>
     
     <insert id="insertNotices" parameterType="com.example.demo.model.WriteNotice">
-    	INSERT INTO notice 
-    	(
-    		title,
-    		content,
-    		author
-    	) 
-    	VALUES
-    	(
-    		#{title},
-    		#{contents},
-    		#{userid}
-    	)
+    	<choose>
+    		<when test="id != null and id != ''">
+    			UPDATE notice
+    			   SET title 	= #{title},
+    			   	   content 	= #{contents},
+    			   	   author 	= #{userid}
+    			 WHERE id 		= #{id}
+    		</when>
+    		<otherwise>
+	    		INSERT INTO notice 
+		    	(
+		    		title,
+		    		content,
+		    		author
+		    	) 
+		    	VALUES
+		    	(
+		    		#{title},
+		    		#{contents},
+		    		#{userid}
+		    	)
+	    	</otherwise>
+    	</choose>
     </insert>
     
     
