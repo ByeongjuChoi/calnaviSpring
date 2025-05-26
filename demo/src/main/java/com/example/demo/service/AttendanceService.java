@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.mapper.AttendanceMapper;
 import com.example.demo.model.Attendance;
 import com.example.demo.model.AttendanceType;
+import com.example.demo.model.UserAttendanceInfo;
 
 @Service
 public class AttendanceService {
@@ -24,5 +25,9 @@ public class AttendanceService {
     
     public List<AttendanceType> getAllAttendanceTypes() {
         return attendanceMapper.selectAllAttendanceTypes();
+    }
+    
+    public List<UserAttendanceInfo> selectUserAttendanceInfo() {
+    	return attendanceMapper.selectUserAttendanceInfo();
     }
 }
