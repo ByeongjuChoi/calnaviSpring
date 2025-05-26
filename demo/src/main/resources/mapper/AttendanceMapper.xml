@@ -44,6 +44,7 @@
 	<select id="selectUserAttendanceInfo" resultType="com.example.demo.model.UserAttendanceInfo">
 	<![CDATA[
 		  select m.userid
+		  	   , m.username 
 		       , a.attendance_cnt
 		       , a.attendance_alltime
 		       , b.used_vacation
@@ -56,15 +57,15 @@
 		       , absent
 		       , (SELECT COUNT(DISTINCT day)
 		            FROM generate_series(
-		                    (date_trunc('month', TO_DATE('202505', 'YYYYMM'))), 
-		                    (date_trunc('month', TO_DATE('202505', 'YYYYMM')) + INTERVAL '1 month' - INTERVAL '1 day'), 
+		                    (date_trunc('month', TO_DATE(#{month}, 'YYYYMM'))), 
+		                    (date_trunc('month', TO_DATE(#{month}, 'YYYYMM')) + INTERVAL '1 month' - INTERVAL '1 day'), 
 		                    '1 day'::interval
 		                 ) AS day
 		            LEFT JOIN attendance t
 		              ON t.userid = m.userid
 		             AND t.date = day
 		           WHERE EXTRACT(DOW FROM day) NOT IN (0, 6)
-		             AND to_char(day, 'YYYYMM') = '202505'
+		             AND to_char(day, 'YYYYMM') = #{month}
 		         ) AS workdays
 		    from myusers m 
 		    left join
@@ -75,7 +76,7 @@
 		                  from attendance
 		                 where 1=1
 		                   and type != (select type from attendance_type where id = 3)
-		                   and to_char(date, 'YYYYMM') = '202505'
+		                   and to_char(date, 'YYYYMM') = #{month}
 		                 group by userid
 		            ) a
 		      on m.userid = a.userid
@@ -87,7 +88,7 @@
 		                  from attendance
 		                 where 1=1
 		                   and type in (select type from attendance_type where id in (4, 5, 6) )
-		                   and to_char(date, 'YYYYMM') = '202505'
+		                   and to_char(date, 'YYYYMM') = #{month}
 		                 group by userid 
 		            ) b
 		      on m.userid = b.userid
@@ -98,7 +99,7 @@
 		                  from attendance
 		                 where 1=1
 		                   and type in (select type from attendance_type where id = 3)
-		                   and to_char(date, 'YYYYMM') = '202505'
+		                   and to_char(date, 'YYYYMM') = #{month}
 		                 group by userid 
 		            ) c
 		      on m.userid = c.userid

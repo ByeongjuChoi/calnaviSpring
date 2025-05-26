@@ -12,5 +12,5 @@ public interface AttendanceMapper {
 	void insertAttendance(Attendance attendance);
 	List<Attendance> selectAttendanceByUserAndMonth(@Param("userid") String userid, @Param("year") int year, @Param("month") int month);
 	List<AttendanceType> selectAllAttendanceTypes();
-	List<UserAttendanceInfo> selectUserAttendanceInfo();
+	List<UserAttendanceInfo> selectUserAttendanceInfo(String month);
 }

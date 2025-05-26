@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.UserAttendanceInfo;
@@ -18,8 +19,8 @@ public class AdminAttendanceController {
 	private AttendanceService attendanceService;
 	
 	@GetMapping("/selectUserAttendanceInfo")
-	public List<UserAttendanceInfo> selectUserAttendanceInfo() {
-		return attendanceService.selectUserAttendanceInfo();
+	public List<UserAttendanceInfo> selectUserAttendanceInfo(@RequestParam("month") String month) {
+		return attendanceService.selectUserAttendanceInfo(month);
 	}
 	
 }

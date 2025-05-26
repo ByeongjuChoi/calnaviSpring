@@ -27,7 +27,7 @@ public class AttendanceService {
         return attendanceMapper.selectAllAttendanceTypes();
     }
     
-    public List<UserAttendanceInfo> selectUserAttendanceInfo() {
-    	return attendanceMapper.selectUserAttendanceInfo();
+    public List<UserAttendanceInfo> selectUserAttendanceInfo(String month) {
+    	return attendanceMapper.selectUserAttendanceInfo(month);
     }
 }
