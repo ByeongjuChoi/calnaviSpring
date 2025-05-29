@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.example.demo.mapper.UserSALMapper">
+
+    <insert id="userSalInsert" parameterType="com.example.demo.model.UserSAL">
+	     INSERT INTO salary 
+	     (
+	     	userid,
+	     	default_sal,
+	     	holyday_sal,
+	     	night_sal,
+	     	career_sal,
+	     	skill_sal,
+	     	special_sal,
+	     	commute_sal,
+	     	housing_sal,
+	     	other_taxation_sal,
+	     	telework_sal,
+	     	other_nontaxable,
+	     	expense_adjustment_sal,
+	     	lateness_deduction,
+	     	absenteeism_deduction,
+	     	other_deduction,
+	     	resident_tax,
+	     	social_housing_fee_excluded,
+	     	employment_insurance_premium,
+	     	health_insurance_premium,
+	     	welfare_pension_premium,
+	     	care_insurance_premium,
+	     	withholding_tax,
+	     	year_end_adjustment
+	     )
+	     VALUES 
+	     (	
+	     	#{userid},
+	     	#{default_sal},
+	     	#{holyday_sal},
+	     	#{night_sal},
+	     	#{career_sal},
+	     	#{skill_sal},
+	     	#{special_sal},
+	     	#{commute_sal},
+	     	#{housing_sal},
+	     	#{other_taxation_sal},
+	     	#{telework_sal},
+	     	#{other_nontaxable},
+	     	#{expense_adjustment_sal},
+	     	#{lateness_deduction},
+	     	#{absenteeism_deduction},
+	     	#{other_deduction},
+	     	#{resident_tax},
+	     	#{social_housing_fee_excluded},
+	     	#{employment_insurance_premium},
+	     	#{health_insurance_premium},
+	     	#{welfare_pension_premium},
+	     	#{care_insurance_premium},
+	     	#{withholding_tax},
+	     	#{year_end_adjustment}
+	     )
+	     ON CONFLICT (userid) DO UPDATE SET
+		    default_sal = EXCLUDED.default_sal,
+		    holyday_sal = EXCLUDED.holyday_sal,
+		    night_sal = EXCLUDED.night_sal,
+		    career_sal = EXCLUDED.career_sal,
+		    skill_sal = EXCLUDED.skill_sal,
+		    special_sal = EXCLUDED.special_sal,
+		    commute_sal = EXCLUDED.commute_sal,
+		    housing_sal = EXCLUDED.housing_sal,
+		    other_taxation_sal = EXCLUDED.other_taxation_sal,
+		    telework_sal = EXCLUDED.telework_sal,
+		    other_nontaxable = EXCLUDED.other_nontaxable,
+		    expense_adjustment_sal = EXCLUDED.expense_adjustment_sal,
+		    lateness_deduction = EXCLUDED.lateness_deduction,
+		    absenteeism_deduction = EXCLUDED.absenteeism_deduction,
+		    other_deduction = EXCLUDED.other_deduction,
+		    resident_tax = EXCLUDED.resident_tax,
+		    social_housing_fee_excluded = EXCLUDED.social_housing_fee_excluded,
+		    employment_insurance_premium = EXCLUDED.employment_insurance_premium,
+		    health_insurance_premium = EXCLUDED.health_insurance_premium,
+		    welfare_pension_premium = EXCLUDED.welfare_pension_premium,
+		    care_insurance_premium = EXCLUDED.care_insurance_premium,
+		    withholding_tax = EXCLUDED.withholding_tax,
+		    year_end_adjustment = EXCLUDED.year_end_adjustment,
+		    updated_at = CURRENT_TIMESTAMP
+	</insert>
+</mapper>
