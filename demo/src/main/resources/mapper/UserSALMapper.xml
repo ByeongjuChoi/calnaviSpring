@@ -3,10 +3,49 @@
  
 <mapper namespace="com.example.demo.mapper.UserSALMapper">
 
+	<select id="userSalSelect" resultType="com.example.demo.model.UserSAL">
+		select default_sal
+		     , holyday_sal
+		     , night_sal
+		     , career_sal
+		     , skill_sal
+		     , special_sal
+		     , commute_sal
+		     , housing_sal
+		     , other_taxation_sal
+		     , telework_sal
+		     , other_nontaxable
+		     , expense_adjustment_sal
+		     , lateness_deduction
+		     , absenteeism_deduction
+		     , other_deduction
+		     , resident_tax
+		     , social_housing_fee_excluded
+		     , employment_insurance_premium
+		     , health_insurance_premium
+		     , welfare_pension_premium
+		     , care_insurance_premium
+		     , withholding_tax
+		     , year_end_adjustment
+		  from salary
+		 where 1=1
+		   and userid = #{userid}
+		   and year_month = #{year_month}
+	</select>
+	
+	<select id="selectAttendanceByUserAndMonth" resultType="com.example.demo.model.Attendance">
+		  SELECT *
+		  	FROM attendance
+		   WHERE userid = #{userid}
+		     AND EXTRACT(YEAR FROM date) = #{year}
+		     AND EXTRACT(MONTH FROM date) = #{month}
+	</select>
+
     <insert id="userSalInsert" parameterType="com.example.demo.model.UserSAL">
 	     INSERT INTO salary 
 	     (
 	     	userid,
+	     	year_month,
 	     	default_sal,
 	     	holyday_sal,
 	     	night_sal,
@@ -34,6 +73,7 @@
 	     VALUES 
 	     (	
 	     	#{userid},
+	     	#{year_month},
 	     	#{default_sal},
 	     	#{holyday_sal},
 	     	#{night_sal},
@@ -58,7 +98,7 @@
 	     	#{withholding_tax},
 	     	#{year_end_adjustment}
 	     )
-	     ON CONFLICT (userid) DO UPDATE SET
+	     ON CONFLICT (userid, year_month) DO UPDATE SET
 		    default_sal = EXCLUDED.default_sal,
 		    holyday_sal = EXCLUDED.holyday_sal,
 		    night_sal = EXCLUDED.night_sal,

@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -33,5 +34,10 @@ public class AdminUserSALController {
 		
 		adminSalService.userSalInsert(userSAL);
 		return ResponseEntity.ok("급여명세서가 등록되었습니다.");
+	}
+	
+	@GetMapping("/selectsal")
+	public UserSAL selectUserSALInfo(String userid, String year_month) {
+		return adminSalService.selectUserSALInfo(userid, year_month);
 	}
 }

@@ -14,4 +14,8 @@ public class AdminSalService {
 	public void userSalInsert(UserSAL usersal) {
 		userSALMapper.userSalInsert(usersal);
 	}
+	
+	public UserSAL selectUserSALInfo(String userid, String year_month) {
+		return userSALMapper.userSalSelect(userid, year_month);
+	}
 }

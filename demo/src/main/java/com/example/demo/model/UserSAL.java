@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class UserSAL {
 	private String userid;
+	private String year_month;
 	private int default_sal;					// 기본급
 	private int holyday_sal;					// 법정 휴일 수당	法定休日手当
 	private int night_sal;						// 심야 수당		深夜手当
