@@ -33,7 +33,7 @@ public class SecurityConfig {
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
         		.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Preflight 허용
-        		.requestMatchers("/api/login", "/api/join", "/api/logout").permitAll()
+        		.requestMatchers("/api/login", "/api/join", "/api/logout", "/api/files/**").permitAll()
         		.requestMatchers("/api/token-remaining").authenticated()
         	    .anyRequest().authenticated()
         )
@@ -49,8 +49,8 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of("http://localhost:3000"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true);  // 이 줄 중요
-        configuration.setExposedHeaders(List.of("Authorization")); // 필요한 경우 추가
+        configuration.setAllowCredentials(true);
+        configuration.setExposedHeaders(List.of("Authorization", "Content-Disposition"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
