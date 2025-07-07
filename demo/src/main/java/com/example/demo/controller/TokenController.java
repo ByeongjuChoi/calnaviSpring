@@ -32,4 +32,20 @@ public class TokenController {
         }
         return ResponseEntity.badRequest().body("유효하지 않은 Authorization 헤더입니다.");
     }
+    
+    @GetMapping("/refresh")
+    public ResponseEntity<String> refreshToken(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String oldToken = authHeader.substring(7);
+            if (jwtUtil.validateToken(oldToken)) {
+                String username = jwtUtil.extractUsername(oldToken);
+                String role = jwtUtil.extractAllClaims(oldToken).get("role", String.class);
+                String newToken = jwtUtil.generateToken(username, role);
+                return ResponseEntity.ok(newToken);
+            } else {
+                return ResponseEntity.status(401).body("만료된 토큰");
+            }
+        }
+        return ResponseEntity.badRequest().body("유효하지 않은 Authorization 헤더입니다.");
+    }
 }
