@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,15 +42,20 @@ public class AdminUserController {
 	}
 
 	@PostMapping("updateusername")
-	public void updateUserName(@RequestBody User user, @RequestHeader("Authorization") String authHeader) {
+	public ResponseEntity<?> updateUserName(@RequestBody User user, @RequestHeader("Authorization") String authHeader) {
 		if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-	        return; // 또는 예외 처리
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authorization header missing or invalid");
 	    }
 
 	    String token = authHeader.substring(7);
 	    if (!jwtUtil.validateToken(token)) {
-	        return; // 또는 예외 처리
+	    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
 	    }
-	    adminUserService.updateUserName(user);
+	    try {
+	        adminUserService.updateUserName(user);
+	        return ResponseEntity.ok().build();
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected error occurred");
+	    }
 	}
 }
